@@ -1,0 +1,949 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>BWX BIKER Shop - Premium Bikes for Every Rider</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&family=Racing+Sans+One&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <style>
+    :root {
+      --primary: #0f4c81;
+      --secondary: #89acb5;
+      --accent: #ff6b00;
+      --light: #f8f9fa;
+      --dark: #212529;
+      --success: #28a745;
+      --warning: #ffc107;
+      --danger: #dc3545;
+      --gray: #6c757d;
+    }
+    
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+    
+    body {
+      font-family: 'Montserrat', sans-serif;
+      background: linear-gradient(to right, #f8f9fa, #e9ecef);
+      color: var(--dark);
+      line-height: 1.6;
+    }
+    
+    header {
+      background: var(--primary);
+      color: white;
+      padding: 1.5rem 1rem;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+      position: relative;
+      overflow: hidden;
+    }
+    
+    header::before {
+      content: "";
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" preserveAspectRatio="none"><path fill="rgba(255,255,255,0.05)" d="M0,0 L100,0 L100,100 L0,100 Z" /></svg>');
+      opacity: 0.1;
+      pointer-events: none;
+    }
+    
+    .header-content {
+      max-width: 1200px;
+      margin: 0 auto;
+      display: flex;
+      flex-direction: column;
+    }
+    
+    .logo-container {
+      display: flex;
+      align-items: center;
+      margin-bottom: 1rem;
+    }
+    
+    .logo-icon {
+      font-size: 2.5rem;
+      margin-right: 15px;
+      color: var(--accent);
+    }
+    
+    header h1 {
+      font-family: 'Racing Sans One', cursive;
+      font-size: 2.5rem;
+      margin-bottom: 0;
+      letter-spacing: 1px;
+      text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+    }
+    
+    header p.tagline {
+      font-size: 1rem;
+      opacity: 0.9;
+      margin-top: 5px;
+    }
+    
+    nav {
+      margin-top: 1.5rem;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+    }
+    
+    nav button {
+      background-color: rgba(255,255,255,0.15);
+      color: white;
+      border: none;
+      padding: 10px 20px;
+      border-radius: 30px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 0.95rem;
+    }
+    
+    nav button:hover, nav button.active {
+      background-color: var(--accent);
+      transform: translateY(-2px);
+      box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+    }
+    
+    nav button i {
+      font-size: 1.1rem;
+    }
+    
+    main {
+      padding: 2rem 1rem;
+      max-width: 1200px;
+      margin: 2rem auto;
+    }
+    
+    .section-title {
+      font-family: 'Racing Sans One', cursive;
+      color: var(--primary);
+      margin-bottom: 1.5rem;
+      font-size: 1.8rem;
+      position: relative;
+      display: inline-block;
+    }
+    
+    .section-title::after {
+      content: "";
+      position: absolute;
+      bottom: -8px;
+      left: 0;
+      width: 60px;
+      height: 3px;
+      background: var(--accent);
+    }
+    
+    .product-section {
+      display: none;
+      animation: fadeIn 0.5s ease-in-out;
+    }
+    
+    .product-section.active {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 2rem;
+    }
+    
+    .product {
+      background: white;
+      border-radius: 12px;
+      overflow: hidden;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+      transition: all 0.3s ease;
+      cursor: pointer;
+      position: relative;
+      display: flex;
+      flex-direction: column;
+    }
+    
+    .product:hover {
+      transform: translateY(-10px);
+      box-shadow: 0 8px 20px rgba(0,0,0,0.15);
+    }
+    
+    .product-image {
+      width: 100%;
+      height: 220px;
+      object-fit: cover;
+      transition: transform 0.5s ease;
+    }
+    
+    .product:hover .product-image {
+      transform: scale(1.05);
+    }
+    
+    .product-badge-container {
+      position: absolute;
+      top: 15px;
+      left: 15px;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      z-index: 2;
+    }
+    
+    .badge {
+      font-weight: bold;
+      padding: 6px 12px;
+      border-radius: 20px;
+      font-size: 0.75rem;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+    
+    .top-badge {
+      background-color: var(--accent);
+      color: white;
+    }
+    
+    .promo-badge {
+      background-color: var(--danger);
+      color: white;
+    }
+    
+    .new-badge {
+      background-color: var(--success);
+      color: white;
+    }
+    
+    .top1 { background-color: gold; color: var(--dark); }
+    .top2 { background-color: silver; color: var(--dark); }
+    .top3 { background-color: #cd7f32; color: white; } 
+    
+    .product-info {
+      padding: 1.5rem;
+      flex-grow: 1;
+      display: flex;
+      flex-direction: column;
+    }
+    
+    .product-info h3 {
+      margin-bottom: 0.5rem;
+      color: var(--primary);
+      font-size: 1.3rem;
+      font-weight: 700;
+    }
+    
+    .product-subtitle {
+      font-style: italic;
+      color: var(--accent);
+      margin-bottom: 0.5rem;
+      font-weight: 500;
+    }
+    
+    .product-description {
+      font-size: 0.9rem;
+      color: var(--gray);
+      margin-bottom: 1rem;
+      flex-grow: 1;
+    }
+    
+    .product-price {
+      font-weight: 700;
+      color: var(--primary);
+      font-size: 1.2rem;
+      margin-top: auto;
+    }
+    
+    .product-price.old {
+      text-decoration: line-through;
+      color: var(--gray);
+      font-size: 0.9rem;
+      margin-right: 8px;
+    }
+    
+    .product-price.discount {
+      color: var(--danger);
+    }
+    
+    .product-actions {
+      display: flex;
+      gap: 10px;
+      margin-top: 1rem;
+    }
+    
+    .btn {
+      padding: 8px 16px;
+      border-radius: 4px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      border: none;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 0.9rem;
+    }
+    
+    .btn-primary {
+      background-color: var(--primary);
+      color: white;
+    }
+    
+    .btn-primary:hover {
+      background-color: #0c3d6b;
+      transform: translateY(-2px);
+    }
+    
+    .btn-outline {
+      background-color: transparent;
+      border: 1px solid var(--primary);
+      color: var(--primary);
+    }
+    
+    .btn-outline:hover {
+      background-color: rgba(15, 76, 129, 0.1);
+    }
+    
+    .btn-accent {
+      background-color: var(--accent);
+      color: white;
+    }
+    
+    .btn-accent:hover {
+      background-color: #e05d00;
+    }
+    
+    .modal {
+      display: none;
+      position: fixed;
+      z-index: 100;
+      left: 0;
+      top: 0;
+      width: 100%;
+      height: 100%;
+      background-color: rgba(0,0,0,0.7);
+      justify-content: center;
+      align-items: center;
+      backdrop-filter: blur(5px);
+      animation: fadeIn 0.3s ease;
+    }
+    
+    .modal-content {
+      background: white;
+      padding: 2.5rem;
+      border-radius: 12px;
+      width: 90%;
+      max-width: 800px;
+      max-height: 90vh;
+      overflow-y: auto;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+      position: relative;
+    }
+    
+    .close-modal {
+      position: absolute;
+      top: 20px;
+      right: 20px;
+      font-size: 1.5rem;
+      cursor: pointer;
+      color: var(--gray);
+      transition: all 0.3s ease;
+    }
+    
+    .close-modal:hover {
+      color: var(--danger);
+      transform: rotate(90deg);
+    }
+    
+    .modal-header {
+      margin-bottom: 1.5rem;
+      padding-bottom: 1rem;
+      border-bottom: 1px solid #eee;
+    }
+    
+    .modal-title {
+      color: var(--primary);
+      font-size: 1.8rem;
+      margin-bottom: 0.5rem;
+      font-weight: 700;
+    }
+    
+    .modal-subtitle {
+      color: var(--accent);
+      font-style: italic;
+      font-weight: 500;
+    }
+    
+    .modal-body {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 2rem;
+      margin-bottom: 2rem;
+    }
+    
+    .modal-image {
+      width: 100%;
+      border-radius: 8px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+    }
+    
+    .modal-details {
+      display: flex;
+      flex-direction: column;
+    }
+    
+    .modal-description {
+      margin-bottom: 1.5rem;
+      line-height: 1.7;
+    }
+    
+    .modal-features {
+      margin-bottom: 1.5rem;
+    }
+    
+    .modal-features h4 {
+      margin-bottom: 0.8rem;
+      color: var(--primary);
+    }
+    
+    .feature-list {
+      list-style-type: none;
+    }
+    
+    .feature-list li {
+      margin-bottom: 0.5rem;
+      display: flex;
+      align-items: center;
+    }
+    
+    .feature-list li::before {
+      content: "•";
+      color: var(--accent);
+      font-weight: bold;
+      margin-right: 10px;
+    }
+    
+    .modal-price-container {
+      background: #f8f9fa;
+      padding: 1.5rem;
+      border-radius: 8px;
+      margin-top: auto;
+    }
+    
+    .price-row {
+      display: flex;
+      justify-content: space-between;
+      margin-bottom: 0.5rem;
+    }
+    
+    .price-label {
+      font-weight: 600;
+    }
+    
+    .current-price {
+      font-size: 1.5rem;
+      font-weight: 700;
+      color: var(--primary);
+    }
+    
+    .old-price {
+      text-decoration: line-through;
+      color: var(--gray);
+    }
+    
+    .discount {
+      color: var(--danger);
+      font-weight: 600;
+    }
+    
+    .modal-footer {
+      display: flex;
+      justify-content: flex-end;
+      gap: 15px;
+      padding-top: 1.5rem;
+      border-top: 1px solid #eee;
+    }
+    
+    .order-form {
+      margin-top: 1.5rem;
+    }
+    
+    .form-group {
+      margin-bottom: 1rem;
+    }
+    
+    .form-group label {
+      display: block;
+      margin-bottom: 0.5rem;
+      font-weight: 600;
+      color: var(--dark);
+    }
+    
+    .form-control {
+      width: 100%;
+      padding: 10px 15px;
+      border: 1px solid #ddd;
+      border-radius: 4px;
+      font-size: 1rem;
+      transition: all 0.3s ease;
+    }
+    
+    .form-control:focus {
+      border-color: var(--primary);
+      outline: none;
+      box-shadow: 0 0 0 3px rgba(15, 76, 129, 0.2);
+    }
+    
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    
+    footer {
+      background: var(--dark);
+      color: white;
+      padding: 3rem 1rem;
+      text-align: center;
+    }
+    
+    .footer-content {
+      max-width: 1200px;
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 2rem;
+      text-align: left;
+    }
+    
+    .footer-column h3 {
+      font-family: 'Racing Sans One', cursive;
+      color: white;
+      margin-bottom: 1.5rem;
+      font-size: 1.3rem;
+      position: relative;
+      display: inline-block;
+    }
+    
+    .footer-column h3::after {
+      content: "";
+      position: absolute;
+      bottom: -8px;
+      left: 0;
+      width: 40px;
+      height: 2px;
+      background: var(--accent);
+    }
+    
+    .footer-links {
+      list-style-type: none;
+    }
+    
+    .footer-links li {
+      margin-bottom: 0.8rem;
+    }
+    
+    .footer-links a {
+      color: rgba(255,255,255,0.7);
+      text-decoration: none;
+      transition: all 0.3s ease;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    
+    .footer-links a:hover {
+      color: white;
+      transform: translateX(5px);
+    }
+    
+    .footer-links i {
+      color: var(--accent);
+      font-size: 0.8rem;
+    }
+    
+    .social-links {
+      display: flex;
+      gap: 15px;
+      margin-top: 1.5rem;
+    }
+    
+    .social-links a {
+      color: white;
+      background: rgba(255,255,255,0.1);
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: all 0.3s ease;
+    }
+    
+    .social-links a:hover {
+      background: var(--accent);
+      transform: translateY(-3px);
+    }
+    
+    .copyright {
+      margin-top: 3rem;
+      padding-top: 1.5rem;
+      border-top: 1px solid rgba(255,255,255,0.1);
+      font-size: 0.9rem;
+      color: rgba(255,255,255,0.6);
+    }
+    
+    /* Responsive adjustments */
+    @media (max-width: 768px) {
+      .modal-body {
+        grid-template-columns: 1fr;
+      }
+      
+      .modal-image {
+        max-height: 250px;
+        object-fit: contain;
+      }
+      
+      .modal-footer {
+        flex-direction: column;
+      }
+      
+      .btn {
+        width: 100%;
+        justify-content: center;
+      }
+    }
+    
+    @media (max-width: 576px) {
+      header h1 {
+        font-size: 2rem;
+      }
+      
+      .product-section.active {
+        grid-template-columns: 1fr;
+      }
+      
+      .modal-content {
+        padding: 1.5rem;
+      }
+    }
+  </style>
+</head>
+<script>
+  function showSection(sectionId) {
+    // Sembunyikan semua section
+    document.querySelectorAll('.product-section').forEach(section => {
+      section.classList.remove('active');
+    });
+    
+    // Tampilkan section yang dipilih
+    document.getElementById(sectionId).classList.add('active');
+    
+    // Update active state pada button nav
+    document.querySelectorAll('nav button').forEach(button => {
+      button.classList.remove('active');
+    });
+    event.currentTarget.classList.add('active');
+  }
+  
+  function openModal(title, subtitle, description, features, image, price, oldPrice) {
+    const modal = document.getElementById('productModal');
+    document.getElementById('modalTitle').textContent = title;
+    document.getElementById('modalSubtitle').textContent = subtitle;
+    document.getElementById('modalDesc').textContent = description;
+    document.getElementById('modalImage').src = image;
+    document.getElementById('modalPrice').textContent = `Rp${price.toLocaleString()}`;
+    document.getElementById('formProduk').value = title;
+    
+    // Format fitur
+    const featuresList = document.getElementById('modalFeatures');
+    featuresList.innerHTML = '';
+    features.forEach(feature => {
+      const li = document.createElement('li');
+      li.textContent = feature;
+      featuresList.appendChild(li);
+    });
+    
+    // Handle harga diskon
+    if (oldPrice) {
+      document.getElementById('oldPriceRow').style.display = 'flex';
+      document.getElementById('discountRow').style.display = 'flex';
+      document.getElementById('modalOldPrice').textContent = `Rp${oldPrice.toLocaleString()}`;
+      
+      const discount = ((oldPrice - price) / oldPrice * 100).toFixed(0);
+      document.getElementById('modalDiscount').textContent = `Rp${(oldPrice - price).toLocaleString()} (${discount}%)`;
+    } else {
+      document.getElementById('oldPriceRow').style.display = 'none';
+      document.getElementById('discountRow').style.display = 'none';
+    }
+    
+    modal.style.display = 'flex';
+    document.body.style.overflow = 'hidden';
+  }
+  
+  function closeModal() {
+    document.getElementById('productModal').style.display = 'none';
+    document.body.style.overflow = 'auto';
+  }
+  
+  </script>
+<body>
+  <header>
+    <div class="header-content">
+      <div class="logo-container">
+        <div class="logo-icon">
+          <i class="fas fa-bicycle"></i>
+        </div>
+        <div>
+          <h1>BWX BIKER</h1>
+          <p class="tagline">Premium Bikes for Every Rider</p>
+        </div>
+      </div>
+      <nav>
+        <button onclick="showSection('featured')" class="active">
+          <i class="fas fa-star"></i> Featured
+        </button>
+        <button onclick="showSection('road')">
+          <i class="fas fa-road"></i> Road Bikes
+        </button>
+        <button onclick="showSection('mountain')">
+          <i class="fas fa-mountain"></i> Mountain Bikes
+        </button>
+        <button onclick="showSection('bmx')">
+          <i class="fas fa-biking"></i> BMX
+        </button>
+        <button onclick="showSection('promo')">
+          <i class="fas fa-tag"></i> Promo
+        </button>
+      </nav>
+    </div>
+  </header>
+  
+  <main>
+    <section id="featured" class="product-section active">
+      <h2 class="section-title">Featured Bikes</h2>
+      <div class="product" onclick="openModal('BWX Strider 700', 'The Urban Sprinter', 'BWX Strider 700 is a premium urban bike designed for high mobility in city environments. With a lightweight alloy frame and hydraulic disc brake system, the Strider 700 provides maximum comfort and safety when navigating busy streets. Suitable for active workers, students, or cycling enthusiasts who want to look stylish while being efficient in every journey.', ['Lightweight alloy frame for easy maneuverability', 'Hydraulic disc brakes for reliable stopping power', 'Smooth-rolling 700c wheels for efficient city riding', 'Ergonomic grips and saddle for all-day comfort'], 'img/GREEN RED BWX.jpg', 3250000, null)">
+        <div class="product-badge-container">
+          <span class="badge top-badge">Bestseller</span>
+          <span class="badge top1">Top 1</span>
+        </div>
+        <img src="img/GREEN RED BWX.jpg" alt="BWX Strider 700" class="product-image" />
+        <div class="product-info">
+          <h3>BWX Strider 700</h3>
+          <p class="product-subtitle">"The Urban Sprinter"</p>
+          <p class="product-description">Lightweight and agile — built for smooth city rides.</p>
+          <p class="product-price">Rp3,250,000</p>
+        </div>
+      </div>
+      
+      <div class="product" onclick="openModal('BWX TrailBlazer 26X', 'The Off-Road Beast', 'BWX TrailBlazer 26X was created for lovers of extreme terrain and off-road trails. Equipped with dual suspension and wide textured tires, this bike can conquer climbs, rocks, and muddy trails with confidence. The combination of strength, stability and comfort makes it the top choice for outdoor adventures.', ['Dual suspension for rough terrain', 'Wide knobby tires for superior traction', 'Durable aluminum frame built to last', '21-speed drivetrain for varied terrain'], 'img/FULL ORANGE BWX.jpg', 4950000, null)">
+        <div class="product-badge-container">
+          <span class="badge top2">Top 2</span>
+        </div>
+        <img src="img/FULL ORANGE BWX.jpg" alt="BWX TrailBlazer 26X" class="product-image" />
+        <div class="product-info">
+          <h3>BWX TrailBlazer 26X</h3>
+          <p class="product-subtitle">"The Off-Road Beast"</p>
+          <p class="product-description">Rugged mountain bike made for wild trails and extreme terrains.</p>
+          <p class="product-price">Rp4,950,000</p>
+        </div>
+      </div>
+      
+      <div class="product" onclick="openModal('BWX NeoCruze 3.0', 'The Vintage Chill', 'Enjoy the sensation of relaxed cycling with classic style through the BWX NeoCruze 3.0. Vintage design with modern touches, complete with a padded saddle, ergonomic curved handlebars and a multifunctional front basket. Ideal for evening cycling in city parks, or as a stylish eco-friendly mode of transportation.', ['Classic cruiser styling with modern components', 'Comfortable padded saddle for relaxed riding', 'Front basket for practical storage', 'Upright riding position for comfort'], 'img/RED WHITE STRIP BWX.jpg', 2750000, null)">
+        <div class="product-badge-container">
+          <span class="badge top3">Top 3</span>
+        </div>
+        <img src="img/RED WHITE STRIP BWX.jpg" alt="BWX NeoCruze 3.0" class="product-image" />
+        <div class="product-info">
+          <h3>BWX NeoCruze 3.0</h3>
+          <p class="product-subtitle">"The Vintage Chill"</p>
+          <p class="product-description">A retro-style cruiser for relaxing rides with timeless vibes.</p>
+          <p class="product-price">Rp2,750,000</p>
+        </div>
+      </div>
+    </section>
+    
+    <section id="road" class="product-section">
+      <h2 class="section-title">Road Bikes</h2>
+      <div class="product" onclick="openModal('BWX Velocity Pro', 'The Speed Demon', 'Designed for road racing enthusiasts, the BWX Velocity Pro features an ultra-light carbon fiber frame and aerodynamic components to slice through wind resistance. Perfect for competitive cyclists and those who crave speed on paved surfaces.', ['Ultra-light carbon fiber frame', 'Aero wheels for reduced drag', '22-speed professional groupset', 'Integrated cockpit for clean looks'], 'img/WHITE BLUE .jpg', 6250000, null)">
+        <div class="product-badge-container">
+          <span class="badge new-badge">New</span>
+        </div>
+        <img src="img/WHITE BLUE .jpg" alt="BWX Velocity Pro" class="product-image" />
+        <div class="product-info">
+          <h3>BWX Velocity Pro</h3>
+          <p class="product-subtitle">"The Speed Demon"</p>
+          <p class="product-description">Race-ready road bike with aerodynamic performance.</p>
+          <p class="product-price">Rp6,250,000</p>
+        </div>
+      </div>
+      
+      <div class="product" onclick="openModal('BWX Urban Commuter', 'The City Navigator', 'A practical solution for daily commuting, the BWX Urban Commuter combines efficiency with comfort. Features include puncture-resistant tires, built-in lights, and a lightweight frame that makes stop-and-go traffic effortless.', ['Puncture-resistant tires for reliability', 'Built-in front and rear lights', 'Lightweight aluminum frame', 'Comfort-oriented geometry'], 'img/TOSCA BWX.jpg', 3850000, null)">
+        <img src="img/TOSCA BWX.jpg" alt="BWX Urban Commuter" class="product-image" />
+        <div class="product-info">
+          <h3>BWX Urban Commuter</h3>
+          <p class="product-subtitle">"The City Navigator"</p>
+          <p class="product-description">Practical and efficient for daily city commuting.</p>
+          <p class="product-price">Rp3,850,000</p>
+        </div>
+      </div>
+    </section>
+    
+    <section id="mountain" class="product-section">
+      <h2 class="section-title">Mountain Bikes</h2>
+      <div class="product" onclick="openModal('BWX Summit XT', 'The Trail Conqueror', 'Built to handle the toughest mountain trails, the BWX Summit XT features full suspension, wide-range gearing, and aggressive tread patterns that grip loose terrain. Whether climbing technical ascents or descending rocky paths, this bike delivers control and confidence.', ['Full suspension for maximum comfort', '1x12 drivetrain for simplicity and range', 'Tubeless-ready wheels for fewer flats', 'Dropper post for technical terrain'], 'img/BLACK GREEN .jpg', 5750000, null)">
+        <div class="product-badge-container">
+          <span class="badge new-badge">New</span>
+        </div>
+        <img src="img/BLACK GREEN .jpg" alt="BWX Summit XT" class="product-image" />
+        <div class="product-info">
+          <h3>BWX Summit XT</h3>
+          <p class="product-subtitle">"The Trail Conqueror"</p>
+          <p class="product-description">Full-suspension mountain bike for technical trails.</p>
+          <p class="product-price">Rp5,750,000</p>
+        </div>
+      </div>
+      
+      <div class="product" onclick="openModal('BWX Hardtail Pro', 'The Versatile Performer', 'The perfect balance between efficiency and capability, the BWX Hardtail Pro features a lightweight hardtail frame with a performance-oriented suspension fork. Ideal for cross-country racing or trail riding where pedaling efficiency matters.', ['Lightweight aluminum frame', '120mm suspension fork', 'Hydraulic disc brakes for all-weather stopping', '29-inch wheels for rolling efficiency'], 'img/BWX 1.jpg', 4250000, null)">
+        <img src="img/BWX 1.jpg" alt="BWX Hardtail Pro" class="product-image" />
+        <div class="product-info">
+          <h3>BWX Hardtail Pro</h3>
+          <p class="product-subtitle">"The Versatile Performer"</p>
+          <p class="product-description">Efficient hardtail for cross-country and trail riding.</p>
+          <p class="product-price">Rp4,250,000</p>
+        </div>
+      </div>
+    </section>
+    
+    <section id="bmx" class="product-section">
+      <h2 class="section-title">BMX Bikes</h2>
+      <div class="product" onclick="openModal('BWX DriftLine FX', 'The Street Hawk', 'BWX DriftLine FX is built for the rider who owns the streets. With a lightweight frame and responsive handling, this bike gives you the perfect balance for sharp turns, quick stunts, and effortless control.', ['Lightweight chromoly frame', 'Responsive 20-inch wheels', '4-piece handlebars for strength', 'Sealed bearing hubs for durability'], 'img/RED STRIP BLACK BWX.jpg', 3250000, null)">
+        <div class="product-badge-container">
+          <span class="badge top-badge">Popular</span>
+        </div>
+        <img src="img/RED STRIP BLACK BWX.jpg" alt="BWX DriftLine FX" class="product-image" />
+        <div class="product-info">
+          <h3>BWX DriftLine FX</h3>
+          <p class="product-subtitle">"The Street Hawk"</p>
+          <p class="product-description">Lightweight freestyle BMX built for high-speed urban tricks.</p>
+          <p class="product-price">Rp3,250,000</p>
+        </div>
+      </div>
+      
+      <div class="product" onclick="openModal('BWX PhantomZ Pro', 'The Silent Shredder', 'Dark, sleek, and ready to dominate. The BWX PhantomZ Pro combines stealth looks with elite performance. Its matte black frame, premium components, and smooth ride make it the perfect companion for both day and night rides.', ['Matte black stealth finish', 'Premium sealed bearing components', 'Strong but lightweight frame', 'Responsive for street and park'], 'img/BLUE RED STRIPE BLACK.jpg', 3750000, null)">
+        <img src="img/BLUE RED STRIPE BLACK.jpg" alt="BWX PhantomZ Pro" class="product-image" />
+        <div class="product-info">
+          <h3>BWX PhantomZ Pro</h3>
+          <p class="product-subtitle">"The Silent Shredder"</p>
+          <p class="product-description">All-black beast designed for stealth and power in motion.</p>
+          <p class="product-price">Rp3,750,000</p>
+        </div>
+      </div>
+    </section>
+    
+    <section id="promo" class="product-section">
+      <h2 class="section-title">Special Promotions</h2>
+      <div class="product" onclick="openModal('BWX Vortex 26X - Black Edition', 'The Power Road', 'The BWX Vortex 26X Black Edition is built for thrill-seekers and adventurers. With dual suspension and a lightweight frame, this bike handles everything from mountain trails to urban obstacles with confidence and style.', ['Dual suspension for all terrain', 'Lightweight aluminum frame', 'Hydraulic disc brakes', 'Aggressive tread pattern'], 'img/BWX 3.jpg', 3712500, 4950000)">
+        <div class="product-badge-container">
+          <span class="badge promo-badge">25% Off</span>
+        </div>
+        <img src="img/BWX 3.jpg" alt="BWX Vortex 26X - Black Edition" class="product-image" />
+        <div class="product-info">
+          <h3>BWX Vortex 26X - Black Edition</h3>
+          <p class="product-subtitle">"The Power Road"</p>
+          <p class="product-description">A powerful mountain bike for extreme terrains.</p>
+          <p class="product-price">
+            <span class="old-price">Rp4,950,000</span> 
+            <span class="product-price discount">Rp3,712,500</span>
+          </p>
+        </div>
+      </div>
+      
+      <div class="product" onclick="openModal('BWX Raptor 26X – Sandstorm Edition', 'The Desert Dominator', 'The BWX Raptor 26X Sandstorm Edition offers excellent performance on rough terrain. Its robust build and superior suspension make it ideal for riders who love sandy, challenging environments.', ['Sand-resistant components', 'Extra-wide tires for loose terrain', 'Reinforced frame construction', 'Special desert color scheme'], 'img/GOLD STRIPES.jpg', 3960000, 4950000)">
+        <div class="product-badge-container">
+          <span class="badge promo-badge">20% Off</span>
+        </div>
+        <img src="img/GOLD STRIPES.jpg" alt="BWX Raptor 26X – Sandstorm Edition" class="product-image" />
+        <div class="product-info">
+          <h3>BWX Raptor 26X – Sandstorm Edition</h3>
+          <p class="product-subtitle">"The Desert Dominator"</p>
+          <p class="product-description">Built for durability and dusty trails.</p>
+          <p class="product-price">
+            <span class="old-price">Rp4,950,000</span> 
+            <span class="product-price discount">Rp3,960,000</span>
+          </p>
+        </div>
+      </div>
+      
+      <div class="product" onclick="openModal('BWX Phantom 26X – Black Green Edition', 'The Jungle Rider', 'The BWX Phantom 26X Black Green Edition is your perfect companion for forest and rocky trail rides. It combines aggressive styling with high-performance features to support every off-road adventure.', ['Camouflage-inspired color scheme', 'Extra-grippy tires for wet conditions', 'Upgraded suspension components', 'Rust-resistant chain and components'], 'img/NAMED GOLD.jpg', 4207500, 4950000)">
+        <div class="product-badge-container">
+          <span class="badge promo-badge">15% Off</span>
+        </div>
+        <img src="img/NAMED GOLD.jpg" alt="BWX Phantom 26X – Black Green Edition" class="product-image" />
+        <div class="product-info">
+          <h3>BWX Phantom 26X – Black Green Edition</h3>
+          <p class="product-subtitle">"The Jungle Rider"</p>
+          <p class="product-description">A wild trail conqueror with bold design.</p>
+          <p class="product-price">
+            <span class="old-price">Rp4,950,000</span> 
+            <span class="product-price discount">Rp4,207,500</span>
+          </p>
+        </div>
+      </div>
+    </section>
+  </main>
+  
+  <div class="modal" id="productModal">
+    <div class="modal-content">
+      <span class="close-modal" onclick="closeModal()">&times;</span>
+      <div class="modal-header">
+        <h3 class="modal-title" id="modalTitle"></h3>
+        <p class="modal-subtitle" id="modalSubtitle"></p>
+      </div>
+      <div class="modal-body">
+        <div>
+          <img id="modalImage" src="" alt="Product Image" class="modal-image">
+        </div>
+        <div class="modal-details">
+          <p class="modal-description" id="modalDesc"></p>
+          <div class="modal-features">
+            <h4>Key Features</h4>
+            <ul class="feature-list" id="modalFeatures">
+              <!-- Features will be inserted here by JavaScript -->
+            </ul>
+          </div>
+          <div class="modal-price-container">
+            <div class="price-row">
+              <span class="price-label">Price:</span>
+              <span class="current-price" id="modalPrice"></span>
+            </div>
+            <div class="price-row" id="oldPriceRow" style="display: none;">
+              <span class="price-label">Original Price:</span>
+              <span class="old-price" id="modalOldPrice"></span>
+            </div>
+            <div class="price-row" id="discountRow" style="display: none;">
+              <span class="price-label">You Save:</span>
+              <span class="discount" id="modalDiscount"></span>
+            </div>
+          </div>
+        </div>
+      </div>
+      <form action="/order" method="POST" class="order-form">
+  <input type="hidden" name="produk" id="formProduk">
+  <div class="form-group">
+    <label for="nama">Your Name:</label>
+    <input type="text" id="nama" name="nama" class="form-control" required>
+  </div>
+  <div class="form-group">
+    <label for="jumlah">Quantity:</label>
+    <input type="number" id="jumlah" name="jumlah" class="form-control" min="1" value="1" required>
+  </div>
+  <div class="modal-footer">
+    <button type="button" class="btn btn-outline" onclick="closeModal()">Close</button>
+    <button type="submit" class="btn btn-accent">Order Now</button>
+  </div>
+</form>
+            
